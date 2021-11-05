@@ -91,7 +91,33 @@ Problem: when using this solution we have to handle conflict make by the last co
 Nhược điểm:
 Reverting a merge commit does not affect _history_ that the merge had. So basicly feature/delete-user branch merged in master branch already. If you try to merge feature/delete-user branch in master branch again it will not work.
 
-Solution 2:
+Solution 2: using reset with cherry-pick to resolve
+
+1.  Find commit ahead of merge commit with `git reflog`. In this case we will find commit at HEAD@{2}.
+
+```git
+ git reflog
+```
+
+2. Use `git reset --hard` to the branch HEAD points slected commit (commit ahead of merge commit).
+
+```git
+ git reset --hard HEAD@{2}
+```
+
+3. Use `git reflog` to find commit after merge commit which we lost after reset (In this case a1fsas8). After that, use `git cherry-pick` to choose that commit and apply it onto current branch.
+
+```git
+ git cherry-pick a1fsas8
+```
+
+4. use `git push -f` to update change to remote branch.
+
+```git
+ git push -f origin master
+```
+
+Problem: As same as solution 1.
 
 ## Question 4: Compare git interactive rebase & git reset
 
