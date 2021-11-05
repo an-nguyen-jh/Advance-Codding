@@ -2,9 +2,9 @@
 
 ## Question 1: When we are creating new feature, what branch should we based on and why?
 
-There are some factorials we need to consider when choosing a based-on branch. The new feature is an independent feature or depends on some features. If it depends on other features which features does it depned on?
+There are some factors we need to consider when choosing a based-on branch. The new feature is an independent feature or depends on some features. If it depends on other features which features does it depened on?
 
-1. New feature is an independent feature or it only related to features already delivery to the production branch. We should base on production branch. Because:
+1. New feature is an independent feature or it is only related to features already delivered to the production branch. We should base on the production branch. Because:
 
    - When developing a new feature, it needs to be suitable for every related feature.
 
@@ -41,7 +41,7 @@ Solution 2:
 
 - Bug is take time to resolve. It is complex and hard to fix.
 
-- Make parallel work. someone handle bug and other teammates keep developing feature.
+- we want to separate the fix bug process and continue to develop a new feature or new feature may rewrite code cause bug and change the bug.
 
 ==> Start to create a new branch to fix that bug.
 
@@ -93,7 +93,7 @@ Reverting a merge commit does not affect _history_ that the merge had. So basicl
 
 Solution 2: using reset with cherry-pick to resolve
 
-1.  Find commit ahead of merge commit with `git reflog`. In this case we will find commit at HEAD@{2}.
+1. Find commit ahead of merge commit with `git reflog`. In this case we will find commit at HEAD@{2}.
 
 ```git
  git reflog
@@ -105,10 +105,10 @@ Solution 2: using reset with cherry-pick to resolve
  git reset --hard HEAD@{2}
 ```
 
-3. Use `git reflog` to find commit after merge commit which we lost after reset (In this case a1fsas8). After that, use `git cherry-pick` to choose that commit and apply it onto current branch.
+3. Use `git reflog` to find commit after merge commit which we lost after reset (In this case a1fsas8). After that, use `git cherry-pick` to choose that commit and apply it onto current branch. Use
 
 ```git
- git cherry-pick a1fsas8
+ git cherry-pick -n a1fsas8
 ```
 
 4. use `git push -f` to update change to remote branch.
@@ -141,3 +141,43 @@ Interactive rebase:
 
 - make variety actions with commit history: squash, edit, split, reorder, ...
 - Add change to multiple commits.
+
+## Question 5: Our current branch is A-B-C-D. foo.js file belongs to another branch and has been merged in the current branch (commit E). At the current branch, we edited foo.js file and create commit F. But later on, we want to undo merge (commit E) and we did it. We also don't want foo.js file to exist after we undo the commit E. What is the solution for this case?
+
+We can remove foo.js file from the commit and untracking that file. We can do it by two ways:
+
+Case 1. We at the HEAD of current branch is at commit F. We can reset commit F and untracking foo.js file.
+
+1. Use `git reset` to presented with the files from the most recent commit (HEAD) and you will be able to commit them.
+
+```git
+git reset --soft HEAD~1
+```
+
+2. Use the `git rm` command in order to delete the file from the index (also called the staging area) or use `git reset HEAD foo.js` to untracking file.
+
+```git
+  git rm --cached foo.js
+  or
+  git reset HEAD foo.js
+```
+
+3. Commit changes again with the “–amend” option.
+
+```git
+  git commit -am
+```
+
+Case 2: We want to make it in undo process to compare commit F (after merge) with commit D (before merge)
+
+1. After reset hard branch back to commit D, We use `git cherry-pick -n` to start pick commit F.
+
+```git
+  git cherry-pick -n <commitF>
+```
+
+2. At this step, we have a conflict because foo.js file didn' t exist at commit D and was modified in commit F. We know that foo.js file is belongs to another branch. So we can remove foo.js file from staging area and keep working.
+
+```git
+  git rm --cached foo.js
+```
