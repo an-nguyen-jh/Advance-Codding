@@ -123,6 +123,7 @@ a {
   height: 100%;
   margin: 5px;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .carousel__image-active {
