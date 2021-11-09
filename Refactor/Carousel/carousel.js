@@ -1,4 +1,4 @@
-(() => {
+(function addEventHandler() {
   const imagesLinkArray = [
     "https://images.unsplash.com/photo-1545623703-583dd2364bbd?ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8NXw0NzMxNTUyfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     "https://images.unsplash.com/photo-1577737330379-1f82737418ab?ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8N3w0NzMxNTUyfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
@@ -33,10 +33,14 @@
   );
   let index = 0;
   const MAIN_IMG_WIDTH = mainImagesContainer.offsetWidth;
-  const imagesList = document.getElementsByClassName("carousel__image-item");
+  const imagesList = document.querySelectorAll(".carousel__image-item");
   //active class for first image & disable preBtn
   imagesContainer.firstChild.classList.add("carousel__image-active");
   preButton.disabled = true;
+
+  imagesList.forEach(function addChooseImageEvent(image) {
+    image.addEventListener("click", chooseImage);
+  });
 
   function scrollSubImage(
     imageOffsetLeft,
@@ -44,7 +48,6 @@
     scrollLeft,
     containerOffsetLeft
   ) {
-    console.log(scrollLeft);
     const imageRightOffset =
       imageOffsetLeft + imageOffsetWidth - containerOffsetLeft;
     if (imageRightOffset > scrollLeft + MAIN_IMG_WIDTH) {
@@ -57,7 +60,7 @@
 
   //create function to handle navigation Button
   function previousImage() {
-    //S1: index equal 0 & and pre button been disable enable image
+    //S1: index equal 0 and pre button been disable enable image
     if (index === imagesLinkArray.length - 1) {
       nextButton.disabled = false;
     }
@@ -151,7 +154,6 @@
   }
 
   //handle Event
-
   preButton.addEventListener("click", previousImage);
   nextButton.addEventListener("click", nextImage);
 })();

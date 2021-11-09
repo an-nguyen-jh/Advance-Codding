@@ -1,4 +1,4 @@
-(function () {
+(function generator() {
   const imagesLinkArray = [
     "https://images.unsplash.com/photo-1545623703-583dd2364bbd?ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8NXw0NzMxNTUyfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     "https://images.unsplash.com/photo-1577737330379-1f82737418ab?ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8N3w0NzMxNTUyfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
@@ -33,13 +33,12 @@
   const imagesContainer = document.getElementById("image-list");
   const mainImagesContainer = document.getElementById("main-image-list");
 
-  imagesLinkArray.forEach((imageLink, i) => {
+  imagesLinkArray.forEach(function addMainAndSubImage(imageLink, i) {
     const imageItem = htmlToElement(htmlNodePrototype.imgItem(imageLink, i));
     const mainImgItem = htmlToElement(htmlNodePrototype.mainImg(imageLink, i));
 
     mainImagesContainer.appendChild(mainImgItem);
     imagesContainer.appendChild(imageItem);
-    // imageItem.addEventListener("click", chooseImage.bind(imageItem));
   });
 
   //==================================== function details ==============================================
