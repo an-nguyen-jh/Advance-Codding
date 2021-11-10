@@ -16,20 +16,20 @@
     "https://images.unsplash.com/photo-1570279402939-62a46724e051?ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTB8NDczMTU1Mnx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8Mnw0NzMxNTUyfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
   ];
-  const subImagesContainer = document.getElementById("image-list");
-  const mainImageContainer = document.getElementById("main-image-list");
+  const subImagesContainer = document.getElementById("sub-image-container");
+  const mainImageContainer = document.getElementById("main-image-container");
   const prevButton = document.querySelector(
-    ".carousel__control.carousel__control__left-btn"
+    ".carousel__control.carousel__control__prev-btn"
   );
   const nextButton = document.querySelector(
-    ".carousel__control.carousel__control__right-btn"
+    ".carousel__control.carousel__control__next-btn"
   );
   let imageIndex = 0;
   const mainImageContainerWidth = mainImageContainer.offsetWidth;
   const mainImageContainerOffset = subImagesContainer.offsetLeft;
-  const subImageList = document.querySelectorAll(".carousel__image-item");
+  const subImageList = document.querySelectorAll(".carousel__sub-image");
   //active class for first image & disable prevBtn
-  subImagesContainer.firstChild.classList.add("carousel__image-active");
+  subImagesContainer.firstChild.classList.add("carousel__sub-image-active");
   prevButton.disabled = true;
 
   function handleHiddenSubImageAtEndAndBeginOfContainer(
@@ -67,7 +67,7 @@
   }
   //create function to handle navigation Button
   function scrollMainImage(direction) {
-    subImageList[imageIndex].classList.remove("carousel__image-active");
+    subImageList[imageIndex].classList.remove("carousel__sub-image-active");
     imageIndex += direction;
     controlNavigationButtonActiveness(imageIndex);
     if (imageIndex >= 0 && imageIndex < verticalImageLinks.length) {
@@ -76,7 +76,7 @@
         -mainImageContainerWidth * imageIndex
       }px)`;
 
-      subImageList[imageIndex].classList.add("carousel__image-active");
+      subImageList[imageIndex].classList.add("carousel__sub-image-active");
       handleHiddenSubImageAtEndAndBeginOfContainer(
         subImageList[imageIndex].offsetLeft,
         subImageList[imageIndex].offsetWidth,
@@ -89,8 +89,8 @@
   }
 
   function selectImage() {
-    const selectedImgeIndex = parseInt(this.getAttribute("data-idx"));
-    subImageList[imageIndex].classList.remove("carousel__image-active");
+    const selectedImgeIndex = parseInt(this.getAttribute("data-index"));
+    subImageList[imageIndex].classList.remove("carousel__sub-image-active");
     mainImageContainer.style.transform = `translateX(${
       -mainImageContainerWidth * selectedImgeIndex
     }px)`;
@@ -102,7 +102,7 @@
     );
     imageIndex = selectedImgeIndex;
     controlNavigationButtonActiveness(imageIndex);
-    subImageList[imageIndex].classList.add("carousel__image-active");
+    subImageList[imageIndex].classList.add("carousel__sub-image-active");
   }
   //handle Event
   prevButton.addEventListener("click", function previousImage() {

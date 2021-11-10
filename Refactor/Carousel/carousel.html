@@ -10,15 +10,18 @@
   <body>
     <main class="carousel-container">
       <div class="carousel-main">
-        <button class="carousel__control carousel__control__left-btn">
+        <button class="carousel__control carousel__control__prev-btn">
           <img
             src="./img/left-arrow.svg"
             class="carousel__control-image"
             alt="Prev"
           />
         </button>
-        <div class="carousel__main-image-container" id="main-image-list"></div>
-        <button class="carousel__control carousel__control__right-btn">
+        <div
+          class="carousel__main-image-container"
+          id="main-image-container"
+        ></div>
+        <button class="carousel__control carousel__control__next-btn">
           <img
             src="./img/right-arrow.svg"
             alt="Next"
@@ -26,7 +29,7 @@
           />
         </button>
       </div>
-      <div class="carousel__image-list" id="image-list"></div>
+      <div class="carousel__image-list" id="sub-image-container"></div>
     </main>
     <script defer src="./generator.js"></script>
     <script defer src="./carousel.js"></script>

@@ -83,11 +83,11 @@ a {
   opacity: 1;
 }
 
-.carousel__control__left-btn {
+.carousel__control__prev-btn {
   left: 0;
 }
 
-.carousel__control__right-btn {
+.carousel__control__next-btn {
   right: 0;
 }
 
@@ -117,7 +117,7 @@ a {
   background-color: hsl(0, 0%, 54%);
 }
 
-.carousel__image-item {
+.carousel__sub-image {
   border: 2px solid transparent;
   max-width: 25%;
   height: 100%;
@@ -126,7 +126,7 @@ a {
   cursor: pointer;
 }
 
-.carousel__image-active {
+.carousel__sub-image-active {
   border: 4px solid var(--activeColor);
 }
 
@@ -146,7 +146,7 @@ a {
   .carousel__control-image {
     height: 45px;
   }
-  .carousel__image-item {
+  .carousel__sub-image {
     width: 25%;
   }
 }

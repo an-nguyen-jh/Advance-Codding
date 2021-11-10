@@ -19,12 +19,12 @@
 
   const htmlStrPrototype = {
     mainImgStr: (imgLink, index) =>
-      `<img class="carousel__main-image" async src="${imgLink}" data-idx="${index}" alt="Main image display"/>`,
-    subImgStr: (imageLink, index) =>
-      `<img class="carousel__image-item" async src="${imageLink}" data-idx="${index}" alt="Image Item" />`,
+      `<img class="carousel__main-image" async src="${imgLink}" data-index="${index}" alt="Main image"/>`,
+    subImgStr: (imgLink, index) =>
+      `<img class="carousel__sub-image" async src="${imgLink}" data-index="${index}" alt="Sub image" />`,
   };
-  const subImagesContainer = document.getElementById("image-list");
-  const mainImageContainer = document.getElementById("main-image-list");
+  const subImagesContainer = document.getElementById("sub-image-container");
+  const mainImageContainer = document.getElementById("main-image-container");
 
   verticalImageLinks.forEach(function addMainImageAndSubImages(imageLink, i) {
     const subImage = htmlStrToElement(htmlStrPrototype.subImgStr(imageLink, i));
