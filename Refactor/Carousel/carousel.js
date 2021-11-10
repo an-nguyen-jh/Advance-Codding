@@ -24,13 +24,27 @@
   const nextButton = document.querySelector(
     ".carousel__control.carousel__control__next-btn"
   );
-  let imageIndex = 0;
+  let currentImageIndex = 0;
   const mainImageContainerWidth = mainImageContainer.offsetWidth;
   const mainImageContainerOffset = subImagesContainer.offsetLeft;
   const subImageList = document.querySelectorAll(".carousel__sub-image");
   //active class for first image & disable prevBtn
   subImagesContainer.firstChild.classList.add("carousel__sub-image-active");
   prevButton.disabled = true;
+
+  addEventHandlersToElement();
+
+  function addEventHandlersToElement() {
+    prevButton.addEventListener("click", function previousImage() {
+      scrollMainImage(-1);
+    });
+    nextButton.addEventListener("click", function nextImage() {
+      scrollMainImage(1);
+    });
+    subImageList.forEach(function addSelectImageEvent(image) {
+      image.addEventListener("click", selectImage);
+    });
+  }
 
   function handleHiddenSubImageAtEndAndBeginOfContainer(
     imageOffsetLeft,
@@ -52,66 +66,61 @@
     }
   }
 
-  function controlNavigationButtonActiveness(imageIndex) {
-    if (imageIndex === 0) {
+  function controlNavigationButtonActiveness(currentImageIndex) {
+    if (currentImageIndex === 0) {
       prevButton.disabled = true;
       nextButton.disabled = false;
-    } else if (imageIndex === verticalImageLinks.length - 1) {
+    } else if (currentImageIndex === verticalImageLinks.length - 1) {
       nextButton.disabled = true;
       prevButton.disabled = false;
-    }
-    if (imageIndex > 0 && imageIndex < verticalImageLinks.length - 1) {
+    } else if (
+      currentImageIndex > 0 &&
+      currentImageIndex < verticalImageLinks.length - 1
+    ) {
       prevButton.disabled = false;
       nextButton.disabled = false;
     }
   }
+
+  function handleMainImageTransform(imgIndex) {
+    mainImageContainer.style.transform = `translateX(${
+      -mainImageContainerWidth * imgIndex
+    }px)`;
+  }
+
   //create function to handle navigation Button
   function scrollMainImage(direction) {
-    subImageList[imageIndex].classList.remove("carousel__sub-image-active");
-    imageIndex += direction;
-    controlNavigationButtonActiveness(imageIndex);
-    if (imageIndex >= 0 && imageIndex < verticalImageLinks.length) {
-      //make main container scroll back
-      mainImageContainer.style.transform = `translateX(${
-        -mainImageContainerWidth * imageIndex
-      }px)`;
-
-      subImageList[imageIndex].classList.add("carousel__sub-image-active");
-      handleHiddenSubImageAtEndAndBeginOfContainer(
-        subImageList[imageIndex].offsetLeft,
-        subImageList[imageIndex].offsetWidth,
-        subImagesContainer.scrollLeft
-      );
-    }
-    if (imageIndex === 0) {
-      prevButton.disabled = true;
-    }
+    subImageList[currentImageIndex].classList.remove(
+      "carousel__sub-image-active"
+    );
+    currentImageIndex += direction;
+    subImageList[currentImageIndex].classList.add("carousel__sub-image-active");
+    controlNavigationButtonActiveness(currentImageIndex);
+    //make main container scroll
+    handleMainImageTransform(currentImageIndex);
+    handleHiddenSubImageAtEndAndBeginOfContainer(
+      subImageList[currentImageIndex].offsetLeft,
+      subImageList[currentImageIndex].offsetWidth,
+      subImagesContainer.scrollLeft
+    );
   }
 
   function selectImage() {
-    const selectedImgeIndex = parseInt(this.getAttribute("data-index"));
-    subImageList[imageIndex].classList.remove("carousel__sub-image-active");
-    mainImageContainer.style.transform = `translateX(${
-      -mainImageContainerWidth * selectedImgeIndex
-    }px)`;
+    const selectedImageIndex = parseInt(this.getAttribute("data-index"));
+    subImageList[currentImageIndex].classList.remove(
+      "carousel__sub-image-active"
+    );
+    currentImageIndex = selectedImageIndex;
 
+    subImageList[currentImageIndex].classList.add("carousel__sub-image-active");
+
+    controlNavigationButtonActiveness(currentImageIndex);
+
+    handleMainImageTransform(currentImageIndex);
     handleHiddenSubImageAtEndAndBeginOfContainer(
       this.offsetLeft,
       this.offsetWidth,
       subImagesContainer.scrollLeft
     );
-    imageIndex = selectedImgeIndex;
-    controlNavigationButtonActiveness(imageIndex);
-    subImageList[imageIndex].classList.add("carousel__sub-image-active");
   }
-  //handle Event
-  prevButton.addEventListener("click", function previousImage() {
-    scrollMainImage(-1);
-  });
-  nextButton.addEventListener("click", function nextImage() {
-    scrollMainImage(1);
-  });
-  subImageList.forEach(function addSelectImageEvent(image) {
-    image.addEventListener("click", selectImage);
-  });
 })();
