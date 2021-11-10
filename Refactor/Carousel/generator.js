@@ -1,5 +1,5 @@
-(function generator() {
-  const imagesLinkArray = [
+(function generatorMainImageAndSubImages() {
+  const verticalImageLinks = [
     "https://images.unsplash.com/photo-1545623703-583dd2364bbd?ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8NXw0NzMxNTUyfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     "https://images.unsplash.com/photo-1577737330379-1f82737418ab?ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8N3w0NzMxNTUyfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     "https://images.unsplash.com/photo-1570279402939-62a46724e051?ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTB8NDczMTU1Mnx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
@@ -17,27 +17,29 @@
     "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8Mnw0NzMxNTUyfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
   ];
 
-  const htmlNodePrototype = {
-    mainImg: (imgLink, index) =>
+  const htmlStrPrototype = {
+    mainImgStr: (imgLink, index) =>
       `<img class="carousel__main-image" async src="${imgLink}" data-idx="${index}" alt="Main image display"/>`,
-    imgItem: (imageLink, index) =>
+    subImgStr: (imageLink, index) =>
       `<img class="carousel__image-item" async src="${imageLink}" data-idx="${index}" alt="Image Item" />`,
   };
-  const imagesContainer = document.getElementById("image-list");
-  const mainImagesContainer = document.getElementById("main-image-list");
+  const subImagesContainer = document.getElementById("image-list");
+  const mainImageContainer = document.getElementById("main-image-list");
 
-  imagesLinkArray.forEach(function addMainAndSubImage(imageLink, i) {
-    const imageItem = htmlToElement(htmlNodePrototype.imgItem(imageLink, i));
-    const mainImgItem = htmlToElement(htmlNodePrototype.mainImg(imageLink, i));
+  verticalImageLinks.forEach(function addMainImageAndSubImages(imageLink, i) {
+    const subImage = htmlStrToElement(htmlStrPrototype.subImgStr(imageLink, i));
+    const mainImage = htmlStrToElement(
+      htmlStrPrototype.mainImgStr(imageLink, i)
+    );
 
-    mainImagesContainer.appendChild(mainImgItem);
-    imagesContainer.appendChild(imageItem);
+    mainImageContainer.appendChild(mainImage);
+    subImagesContainer.appendChild(subImage);
   });
 
   //==================================== function details ==============================================
 
   //function to convert html to Node element
-  function htmlToElement(html) {
+  function htmlStrToElement(html) {
     var template = document.createElement("template");
     // Never return a text node of whitespace as the result
     html = html.trim();
