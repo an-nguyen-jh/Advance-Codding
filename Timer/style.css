@@ -1,5 +1,81 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
 :root {
+  --primaryColor: hsl(263, 100%, 50%);
+  --whiteColor: #ffffff;
+  --secondaryColor: hsl(0, 0%, 80%);
 }
 
 body {
+  background: url("./public/dark-bg.jpg");
+  background-position: center;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.center-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.timer-container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+}
+
+.timer-start-btn {
+  width: 50%;
+  height: 48px;
+  margin: 10px;
+  background-color: var(--primaryColor);
+  color: var(--whiteColor);
+  font-size: 500;
+  border: 0;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  border-radius: 5px;
+}
+
+.timer-clock-container {
+  font-size: 6rem;
+  color: var(--secondaryColor);
+  align-items: center;
+  display: flex;
+  margin: 10px;
+}
+
+.timer-number {
+  display: inline-block;
+}
+
+.queston-container {
+  background-color: var(--secondaryColor);
+  color: #000000;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.answer-container {
+  width: 100%;
+  margin: 10px 0;
+  padding: 20px;
 }
