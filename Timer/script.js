@@ -39,7 +39,8 @@
   ];
   const minuteInTimer = document.getElementById("minute-timer");
   const secondInTimer = document.getElementById("second-timer");
-  const timer = document.querySelector(".timer");
+  const timer = document.getElementById("timer-content");
+  const timerClock = document.querySelector(".timer__clock-container");
   let selectedQuestion = {};
   let countdownTime = 0;
   let countdownClockDisplay;
@@ -47,8 +48,7 @@
   addWebsiteEventHandlers();
 
   function addWebsiteEventHandlers() {
-    const startBtn = document.getElementById("start-btn");
-    startBtn.addEventListener("click", startCountdownClock);
+    timerClock.addEventListener("click", startCountdownClock);
   }
 
   function randomSelectQuestion() {
@@ -63,7 +63,8 @@
     const selectedQuestion = randomSelectQuestion();
     countdownTime = selectedQuestion.timeForAnswer;
     questionContainer.innerHTML = selectedQuestion.question;
+    timerClock.style.cursor = "context-menu";
     timer.style.display = "flex";
-    console.log(countdownTime);
+    timerClock.removeEventListener("click", startCountdownClock);
   }
 })();

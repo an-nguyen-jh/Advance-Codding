@@ -99,11 +99,12 @@ body {
   background-color: var(--secondaryDarkColor);
 }
 
-.timer {
+.timer__content {
   display: none;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .timer__clock-container {
@@ -112,6 +113,7 @@ body {
   align-items: center;
   display: flex;
   margin: var(--mainMargin);
+  cursor: pointer;
 }
 
 .timer__clock__number {
@@ -127,6 +129,7 @@ body {
   padding: var(--mainPadding);
   border-radius: 10px;
   margin: var(--mainMargin) 0;
+  text-align: center;
 }
 
 .answer-container {
