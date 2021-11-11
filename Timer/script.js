@@ -45,8 +45,8 @@
   ];
   const noticeType = {
     right: "Congaratulation!! Your answer is correct",
-    false: "Sorry, you had fail",
-    timeout: "ohh, time out",
+    wrong: "Sorry, It is a wrong anwser",
+    timeout: "Ohh, Time out",
   };
 
   const noticeContainer = document.querySelector(".notice-container");
@@ -127,11 +127,13 @@
       if (correctAnswer === answer) {
         noticeContainer.style.display = "flex";
         noticeTitle.innerHTML = noticeType.right;
-        // console.log(countdownClock);
         clearInterval(countdownClock);
         answerInput.readOnly = true;
+        controlPresentOfContinueAndResetBtn(true, true);
       } else {
-        alert(false);
+        noticeContainer.style.display = "flex";
+        noticeTitle.innerHTML = noticeType.wrong;
+        controlPresentOfContinueAndResetBtn(false, false);
       }
     }
   }
@@ -150,7 +152,6 @@
     const randomQuestionIndex = indexOfRemainQuestions[randomIndex];
     //remove selected quuestion out of remain question list
     indexOfRemainQuestions.splice(randomIndex, 1);
-    console.log(indexOfRemainQuestions, randomQuestionIndex);
     return questionAndAnswerPairs[randomQuestionIndex];
   }
 
@@ -168,12 +169,21 @@
       secondInTimer.innerHTML = nomializedSecond;
       countdownTime--;
       if (countdownTime < 0) {
+        noticeContainer.style.display = "flex";
+        noticeTitle.innerHTML = noticeType.timeout;
+        clearInterval(countdownClock);
+        answerInput.readOnly = true;
+        controlPresentOfContinueAndResetBtn(false, true);
       }
-      //console.log(countdownTime);
     }
     //the setInterval function delay the first time
     displayCountdownClock();
     return setInterval(displayCountdownClock, 1000);
+  }
+
+  function controlPresentOfContinueAndResetBtn(isContinue, isReset) {
+    continueBtn.style.display = isContinue ? "inline-block" : "none";
+    resetBtn.style.display = isReset ? "inline-block" : "none";
   }
 
   function convertTimeToMinuteAndSecond(time) {

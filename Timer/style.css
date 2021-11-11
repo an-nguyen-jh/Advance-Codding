@@ -53,6 +53,7 @@ body {
 .notice__btn-group {
   width: 100%;
   display: flex;
+  justify-content: center;
 }
 
 .timer-container {
