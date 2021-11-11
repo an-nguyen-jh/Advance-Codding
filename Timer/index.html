@@ -12,30 +12,32 @@
     <div class="center-container">
       <div class="modal-container">
         <div class="modal">
-          <p class="modal-title">Congratulation</p>
-          <p class="modal-title">Sorry</p>
+          <p class="modal__title">Congratulation</p>
+          <p class="modal__title">Sorry</p>
           <div class="modal__btn-group">
-            <button class="restart-btn" id="restart-btn">Restart</button>
-            <button class="exit-btn" id="exit-btn">Exit</button>
+            <button class="modal__restart-btn" id="restart-btn">Restart</button>
+            <button class="modal__exit-btn" id="exit-btn">Exit</button>
           </div>
         </div>
       </div>
       <div class="timer-container">
-        <button class="timer-start-btn" id="start-btn">Start Question</button>
-        <div class="timer-clock-container">
-          <div class="timer-number" id="minute">20</div>
-          <span>&nbsp;:&nbsp;</span>
-          <div class="timer-number" id="second">30</div>
+        <button class="timer__start-btn" id="start-btn">Start Question</button>
+        <div class="timer">
+          <div class="timer__clock-container">
+            <div class="timer__clock__number" id="timer-minute">20</div>
+            <span>&nbsp;:&nbsp;</span>
+            <div class="timer__clock__number" id="timer-second">30</div>
+          </div>
+          <div class="queston-container">
+            Let add Somthing in question container to display
+          </div>
+          <input
+            type="text"
+            class="answer-container"
+            id="answer"
+            placeholder="Add answer here"
+          />
         </div>
-        <div class="queston-container">
-          Let add Somthing in question container to display
-        </div>
-        <input
-          type="text"
-          class="answer-container"
-          id="answer"
-          placeholder="Add answer here"
-        />
       </div>
     </div>
     <script async src="./script.js"></script>
