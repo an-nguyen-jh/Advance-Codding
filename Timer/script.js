@@ -44,9 +44,10 @@
     },
   ];
   const noticeType = {
-    right: "Congaratulation!! Your answer is correct",
-    wrong: "Sorry, It is a wrong anwser",
+    right: "Congratulation!! Your answer is correct",
+    wrong: "Sorry, It is a wrong answer",
     timeout: "Ohh, Time out",
+    finish: "Congratulation!! You had finished all questions",
   };
 
   const noticeContainer = document.querySelector(".notice-container");
@@ -58,8 +59,7 @@
   const answerInput = document.getElementById("answer");
   const questionContainer = document.querySelector(".queston-container");
 
-  let selectedQuestion = {};
-  //let countdownTime = 0;
+  let selectedQuestion;
   let countdownClock;
   //array to hold index of remain question
   let indexOfRemainQuestions = Array.from(
@@ -125,16 +125,35 @@
     //if answer length > 0 and in range from [a-z0-9]
     if (answer.length > 0 && e.which <= 90 && e.which >= 48) {
       if (correctAnswer === answer) {
-        noticeContainer.style.display = "flex";
-        noticeTitle.innerHTML = noticeType.right;
+        console.log(indexOfRemainQuestions.length);
+        if (indexOfRemainQuestions.length === 0) {
+          handleNoticeAfterAnswer("finish");
+        } else {
+          handleNoticeAfterAnswer("right");
+        }
+      } else {
+        handleNoticeAfterAnswer("wrong");
+      }
+    }
+  }
+
+  function handleNoticeAfterAnswer(status) {
+    noticeContainer.style.display = "flex";
+    noticeTitle.innerHTML = noticeType[status];
+    switch (status) {
+      case "wrong":
+        controlPresentOfContinueAndResetBtn(false, false);
+        break;
+      case "right":
         clearInterval(countdownClock);
         answerInput.readOnly = true;
         controlPresentOfContinueAndResetBtn(true, true);
-      } else {
-        noticeContainer.style.display = "flex";
-        noticeTitle.innerHTML = noticeType.wrong;
-        controlPresentOfContinueAndResetBtn(false, false);
-      }
+        break;
+      case "finish":
+        clearInterval(countdownClock);
+        answerInput.readOnly = true;
+        controlPresentOfContinueAndResetBtn(false, true);
+        break;
     }
   }
 
