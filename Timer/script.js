@@ -39,15 +39,25 @@
     },
     {
       question: "How long will it take to sell 1 billion packets of sesame?",
-      answer: "guess what?",
+      answer: "who know",
       timeForAnswer: 60, //s
     },
   ];
+  const noticeType = {
+    right: "Congaratulation!! Your answer is correct",
+    false: "Sorry, you had fail",
+    timeout: "ohh, time out",
+  };
 
+  const noticeContainer = document.querySelector(".notice-container");
+  const noticeTitle = document.querySelector(".notice__title");
   const timerContent = document.getElementById("timer-content");
-  // const timerClock = document.querySelector(".timer__clock-container");
+  const continueBtn = document.getElementById("continue-btn");
+  const resetBtn = document.getElementById("reset-btn");
   const timerStartBtn = document.querySelector(".timer__start-btn");
   const answerInput = document.getElementById("answer");
+  const questionContainer = document.querySelector(".queston-container");
+
   let selectedQuestion = {};
   //let countdownTime = 0;
   let countdownClock;
@@ -59,26 +69,44 @@
   addWebsiteEventHandlers();
 
   function addWebsiteEventHandlers() {
-    timerStartBtn.addEventListener("click", startCountdownClock);
+    timerStartBtn.addEventListener("click", startSolveQuestions);
     answerInput.addEventListener(
       "keyup",
       debounceAnswerChange(function calback(e) {
         checkCorrectnessOfAnswer(e);
       })
     );
+    answerInput.addEventListener(
+      "paste",
+      debounceAnswerChange(function calback(e) {
+        checkCorrectnessOfAnswer(e);
+      })
+    );
+    continueBtn.addEventListener("click", startCountdownForQuestion);
+    resetBtn.addEventListener("click", resetSolveProcess);
   }
 
-  function startCountdownClock() {
-    const questionContainer = document.querySelector(".queston-container");
+  function startSolveQuestions() {
+    timerContent.style.display = "flex";
+    timerStartBtn.style.display = "none";
+    startCountdownForQuestion();
+  }
+
+  function startCountdownForQuestion() {
     selectedQuestion = randomSelectQuestion();
     const countdownTime = selectedQuestion.timeForAnswer;
     questionContainer.innerHTML = selectedQuestion.question;
-    timerContent.style.display = "flex";
-    timerStartBtn.style.display = "none";
     countdownClock = countdownInterval(countdownTime);
+    hiddenNotice();
+    answerInput.value = "";
+    answerInput.readOnly = false;
   }
 
-  function debounceAnswerChange(callback, timeout = 500) {
+  function hiddenNotice() {
+    noticeContainer.style.display = "none";
+  }
+
+  function debounceAnswerChange(callback, timeout = 1000) {
     let timer;
     return function holdTimer(...args) {
       //args take argument pass in when event handle active, in this case keyboard event
@@ -94,20 +122,35 @@
   function checkCorrectnessOfAnswer(e) {
     const answer = e.target.value.trim().toLowerCase();
     const correctAnswer = selectedQuestion?.answer;
-    if (correctAnswer === answer) {
-      alert(true);
-    } else {
-      alert(false);
+    //if answer length > 0 and in range from [a-z0-9]
+    if (answer.length > 0 && e.which <= 90 && e.which >= 48) {
+      if (correctAnswer === answer) {
+        noticeContainer.style.display = "flex";
+        noticeTitle.innerHTML = noticeType.right;
+        // console.log(countdownClock);
+        clearInterval(countdownClock);
+        answerInput.readOnly = true;
+      } else {
+        alert(false);
+      }
     }
+  }
+
+  function resetSolveProcess() {
+    indexOfRemainQuestions = Array.from(
+      Array(questionAndAnswerPairs.length).keys()
+    );
+    startCountdownForQuestion();
   }
 
   function randomSelectQuestion() {
     const randomIndex = Math.floor(
-      Math.random() * questionAndAnswerPairs.length
+      Math.random() * indexOfRemainQuestions.length
     );
     const randomQuestionIndex = indexOfRemainQuestions[randomIndex];
     //remove selected quuestion out of remain question list
     indexOfRemainQuestions.splice(randomIndex, 1);
+    console.log(indexOfRemainQuestions, randomQuestionIndex);
     return questionAndAnswerPairs[randomQuestionIndex];
   }
 
