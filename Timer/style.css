@@ -113,7 +113,6 @@ body {
   align-items: center;
   display: flex;
   margin: var(--mainMargin);
-  cursor: pointer;
 }
 
 .timer__clock__number {

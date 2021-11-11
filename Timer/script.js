@@ -5,31 +5,37 @@
       The sister was not born in winter.
       Who was born in summer?`,
       answer: "The sister",
-      timeForAnswer: 10, //s
+      timeForAnswer: 20, //s
     },
     {
       question: `Olive's mom has five daughters:
       Bella, Annie, Martha, Kate...
       What is the name of the fifth daughter?`,
       answer: "Olive",
-      timeForAnswer: 15, //s
+      timeForAnswer: 30, //s
     },
     {
-      question: `Input the missing number
-      2,32,332,...,33332`,
-      answer: "3332",
-      timeForAnswer: 10, //s
+      question: `There are two ducks in front of a duck, two ducks behind a duck and a duck in the middle. How many ducks are there?`,
+      answer: "Three",
+      timeForAnswer: 20, //s
     },
     {
-      question: "What is your main focus today?",
-      answer: "complete timer website",
-      timeForAnswer: 120, //s
+      question:
+        "Five people were eating apples, A finished before B, but behind C. D finished before E, but behind B. What was the finishing order?",
+      answer: "CABDE",
+      timeForAnswer: 30, //s
     },
     {
       question:
         "Which country is the second-highest mountain on Earth belong to?",
       answer: "Pakistan/China",
       timeForAnswer: 20, //s
+    },
+    {
+      question:
+        "The day before two days after the day before tomorrow is Saturday. What day is it today?",
+      answer: "Friday",
+      timeForAnswer: 40, //s
     },
     {
       question: "How long will it take to sell 1 billion packets of sesame?",
@@ -39,7 +45,8 @@
   ];
 
   const timer = document.getElementById("timer-content");
-  const timerClock = document.querySelector(".timer__clock-container");
+  // const timerClock = document.querySelector(".timer__clock-container");
+  const timerStartBtn = document.querySelector(".timer__start-btn");
   let selectedQuestion = {};
   //let countdownTime = 0;
   let countdownClock;
@@ -47,7 +54,7 @@
   addWebsiteEventHandlers();
 
   function addWebsiteEventHandlers() {
-    timerClock.addEventListener("click", startCountdownClock);
+    timerStartBtn.addEventListener("click", startCountdownClock);
   }
 
   function startCountdownClock() {
@@ -55,9 +62,8 @@
     const selectedQuestion = randomSelectQuestion();
     const countdownTime = selectedQuestion.timeForAnswer;
     questionContainer.innerHTML = selectedQuestion.question;
-    timerClock.style.cursor = "context-menu";
     timer.style.display = "flex";
-    timerClock.removeEventListener("click", startCountdownClock);
+    timerStartBtn.style.display = "none";
     countdownClock = countdownInterval(countdownTime);
   }
 
@@ -78,7 +84,6 @@
         minute,
         second
       );
-      //console.log(nomializedMinute, nomializedSecond);
       minuteInTimer.innerHTML = nomializedMinute;
       secondInTimer.innerHTML = nomializedSecond;
       countdownTime--;
@@ -108,3 +113,5 @@
     return [minute, second];
   }
 })();
+
+//question list at: https://parade.com/970343/parade/logic-puzzles/
