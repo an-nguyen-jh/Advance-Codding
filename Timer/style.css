@@ -6,10 +6,12 @@
 
 :root {
   --primaryColor: rgb(98, 0, 255);
-  --whiteColor: #ffffff;
   --secondaryColor: rgb(204, 204, 204);
+  --secondaryDarkColor: rgb(175, 175, 175);
   --inputBgColor: rgba(51, 51, 51, 0.6);
   --inputBgColorFocus: rgba(68, 68, 68, 0.6);
+  --mainPadding: 20px;
+  --mainMargin: 10px;
 }
 
 body {
@@ -30,31 +32,69 @@ body {
   position: relative;
 }
 
-/* =================================== Modal ============================================= */
+.modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--inputBgColor);
+}
 
-/* =================================== Timer ============================================== */
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 600px;
+  height: fit-content;
+  padding: var(--mainPadding);
+  border-radius: 10px;
+}
+
+.modal-title {
+  color: #000000;
+  font-size: 2rem;
+}
+
+.modal__btn-group {
+  width: 100%;
+  display: flex;
+}
 
 .timer-container {
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.3);
-  padding: 10px;
+  padding: var(--mainPadding);
 }
-
+.restart-btn,
+.exit-btn,
 .timer-start-btn {
   width: 50%;
   height: 48px;
-  margin: 10px;
-  background-color: var(--primaryColor);
-  color: var(--whiteColor);
+  margin: var(--mainMargin);
+  color: #ffffff;
   font-weight: 500;
   border: 0;
-  text-transform: uppercase;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.restart-btn,
+.timer-start-btn {
+  background-color: var(--primaryColor);
+}
+
+.exit-btn {
+  background-color: var(--secondaryDarkColor);
 }
 
 .timer-clock-container {
@@ -62,7 +102,7 @@ body {
   color: var(--secondaryColor);
   align-items: center;
   display: flex;
-  margin: 10px;
+  margin: var(--mainMargin);
 }
 
 .timer-number {
@@ -75,19 +115,20 @@ body {
   font-size: 1.15rem;
   line-height: 1.25;
   width: 100%;
-  padding: 20px;
+  padding: var(--mainPadding);
   border-radius: 10px;
-  margin: 10px 0;
+  margin: var(--mainMargin) 0;
 }
 
 .answer-container {
   width: 100%;
-  margin: 10px 0;
-  padding: 20px 20px 5px 20px;
+  margin: var(--mainMargin) 0;
+  padding: var(--mainPadding);
+  padding-bottom: 5px;
   background-color: var(--inputBgColor);
   border: 0;
   border-bottom: 2px solid #000000;
-  color: var(--whiteColor);
+  color: #ffffff;
 }
 
 .answer-container:focus,
