@@ -40,6 +40,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: var(--inputBgColor);
+  display: none;
 }
 
 .modal {
@@ -96,6 +97,13 @@ body {
 
 .modal__exit-btn {
   background-color: var(--secondaryDarkColor);
+}
+
+.timer {
+  display: none;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .timer__clock-container {
