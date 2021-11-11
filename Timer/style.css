@@ -43,7 +43,10 @@ body {
   padding: var(--mainPadding);
   border-radius: 10px;
 }
-
+.notice__icon {
+  width: 125px;
+  height: 125px;
+}
 .notice__title {
   color: #ffffff;
   font-size: 2rem;

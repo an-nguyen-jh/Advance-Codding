@@ -44,10 +44,19 @@
     },
   ];
   const noticeType = {
-    right: "Congratulation!! Your answer is correct",
-    wrong: "Sorry, It is a wrong answer",
-    timeout: "Ohh, Time out",
-    finish: "Congratulation!! You had finished all questions",
+    right: {
+      content: "Congratulation!! Your answer is correct",
+      link: "./public/right.png",
+    },
+    wrong: {
+      content: "Sorry, It is a wrong answer",
+      link: "./public/wrong.png",
+    },
+    timeout: { content: "Ohh, Time out", link: "./public/timeout.png" },
+    finish: {
+      content: "Congratulation!! You had finished all questions",
+      link: "./public/finish.png",
+    },
   };
 
   const noticeContainer = document.querySelector(".notice-container");
@@ -58,6 +67,7 @@
   const timerStartBtn = document.querySelector(".timer__start-btn");
   const answerInput = document.getElementById("answer");
   const questionContainer = document.querySelector(".queston-container");
+  const noticeIcon = document.getElementById("notice-icon");
 
   let selectedQuestion;
   let countdownClock;
@@ -127,19 +137,20 @@
       if (correctAnswer === answer) {
         console.log(indexOfRemainQuestions.length);
         if (indexOfRemainQuestions.length === 0) {
-          handleNoticeAfterAnswer("finish");
+          handleNoticeAndBtnGroup("finish");
         } else {
-          handleNoticeAfterAnswer("right");
+          handleNoticeAndBtnGroup("right");
         }
       } else {
-        handleNoticeAfterAnswer("wrong");
+        handleNoticeAndBtnGroup("wrong");
       }
     }
   }
 
-  function handleNoticeAfterAnswer(status) {
+  function handleNoticeAndBtnGroup(status) {
     noticeContainer.style.display = "flex";
-    noticeTitle.innerHTML = noticeType[status];
+    noticeTitle.innerHTML = noticeType[status].content;
+    noticeIcon.src = noticeType[status].link;
     switch (status) {
       case "wrong":
         controlPresentOfContinueAndResetBtn(false, false);
@@ -149,11 +160,17 @@
         answerInput.readOnly = true;
         controlPresentOfContinueAndResetBtn(true, true);
         break;
+      case "timeout":
       case "finish":
         clearInterval(countdownClock);
         answerInput.readOnly = true;
         controlPresentOfContinueAndResetBtn(false, true);
         break;
+      // case "timeout":
+      //   clearInterval(countdownClock);
+      //   answerInput.readOnly = true;
+      //   controlPresentOfContinueAndResetBtn(false, true);
+      //   break;
     }
   }
 
@@ -188,11 +205,7 @@
       secondInTimer.innerHTML = nomializedSecond;
       countdownTime--;
       if (countdownTime < 0) {
-        noticeContainer.style.display = "flex";
-        noticeTitle.innerHTML = noticeType.timeout;
-        clearInterval(countdownClock);
-        answerInput.readOnly = true;
-        controlPresentOfContinueAndResetBtn(false, true);
+        handleNoticeAndBtnGroup("timeout");
       }
     }
     //the setInterval function delay the first time
