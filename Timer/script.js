@@ -61,7 +61,7 @@
 
   const noticeContainer = document.querySelector(".notice-container");
   const noticeTitle = document.querySelector(".notice__title");
-  const timerContent = document.getElementById("timer-content");
+  const timerContent = document.querySelector(".timer__content");
   const continueBtn = document.getElementById("continue-btn");
   const resetBtn = document.getElementById("reset-btn");
   const timerStartBtn = document.querySelector(".timer__start-btn");
@@ -107,13 +107,9 @@
     const countdownTime = selectedQuestion.timeForAnswer;
     questionContainer.innerHTML = selectedQuestion.question;
     countdownClock = countdownInterval(countdownTime);
-    hiddenNotice();
+    noticeContainer.style.display = "none";
     answerInput.value = "";
     answerInput.readOnly = false;
-  }
-
-  function hiddenNotice() {
-    noticeContainer.style.display = "none";
   }
 
   function debounceAnswerChange(callback, timeout = 1000) {
@@ -123,7 +119,7 @@
       //clearTimeOut to start new process
       clearTimeout(timer);
       //set time debounce invoked callback func when nothing change
-      timer = setTimeout(() => {
+      timer = setTimeout(function invokeCallback() {
         callback.apply(null, args);
       }, timeout);
     };
@@ -131,23 +127,22 @@
 
   function checkCorrectnessOfAnswer(e) {
     const answer = e.target.value.trim().toLowerCase();
-    const correctAnswer = selectedQuestion?.answer;
-    //if answer length > 0 and in range from [a-z0-9]
-    if (answer.length > 0 && e.which <= 90 && e.which >= 48) {
+    const correctAnswer = selectedQuestion.answer;
+    //if answer length > 0
+    if (answer.length > 0 && e.code.match(/Enter|Space|[a-zA-Z0-9]/)) {
       if (correctAnswer === answer) {
-        console.log(indexOfRemainQuestions.length);
         if (indexOfRemainQuestions.length === 0) {
-          handleNoticeAndBtnGroup("finish");
+          controlExpressionOfTimer("finish");
         } else {
-          handleNoticeAndBtnGroup("right");
+          controlExpressionOfTimer("right");
         }
       } else {
-        handleNoticeAndBtnGroup("wrong");
+        controlExpressionOfTimer("wrong");
       }
     }
   }
-
-  function handleNoticeAndBtnGroup(status) {
+  //naming ??
+  function controlExpressionOfTimer(status) {
     noticeContainer.style.display = "flex";
     noticeTitle.innerHTML = noticeType[status].content;
     noticeIcon.src = noticeType[status].link;
@@ -166,11 +161,6 @@
         answerInput.readOnly = true;
         controlPresentOfContinueAndResetBtn(false, true);
         break;
-      // case "timeout":
-      //   clearInterval(countdownClock);
-      //   answerInput.readOnly = true;
-      //   controlPresentOfContinueAndResetBtn(false, true);
-      //   break;
     }
   }
 
@@ -186,7 +176,7 @@
       Math.random() * indexOfRemainQuestions.length
     );
     const randomQuestionIndex = indexOfRemainQuestions[randomIndex];
-    //remove selected quuestion out of remain question list
+    //remove selected quuestion index out of remain question list
     indexOfRemainQuestions.splice(randomIndex, 1);
     return questionAndAnswerPairs[randomQuestionIndex];
   }
@@ -197,15 +187,15 @@
 
     function displayCountdownClock() {
       const [minute, second] = convertTimeToMinuteAndSecond(countdownTime);
-      const [nomializedMinute, nomializedSecond] = normalizeMinuteAndSecond(
+      const [normalizedMinute, normalizedSecond] = normalizeMinuteAndSecond(
         minute,
         second
       );
-      minuteInTimer.innerHTML = nomializedMinute;
-      secondInTimer.innerHTML = nomializedSecond;
+      minuteInTimer.innerHTML = normalizedMinute;
+      secondInTimer.innerHTML = normalizedSecond;
       countdownTime--;
       if (countdownTime < 0) {
-        handleNoticeAndBtnGroup("timeout");
+        controlExpressionOfTimer("timeout");
       }
     }
     //the setInterval function delay the first time
