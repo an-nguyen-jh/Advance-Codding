@@ -1,3 +1,5 @@
+const DEBOUNCE_TIMEOUT = 500;
+
 export function convertTimeToMinuteAndSecond(time) {
   let minute = Math.floor(time / 60);
   let second = time - minute * 60;
@@ -14,7 +16,7 @@ export function normalizeMinuteAndSecond(minute, second) {
   return [minute, second];
 }
 
-export function debounceAnswerChange(callback, timeout = 500) {
+export function debounceAnswerChange(callback, timeout = DEBOUNCE_TIMEOUT) {
   let timer;
   return function holdTimer(...args) {
     //args take argument pass in when event handle active, in this case keyboard event
@@ -33,7 +35,6 @@ export function randomSelectQuestion(
 ) {
   const randomIndex = Math.floor(Math.random() * indexOfRemainQuestions.length);
   const randomQuestionIndex = indexOfRemainQuestions[randomIndex];
-  console.log(indexOfRemainQuestions);
   //remove selected quuestion index out of remain question list
   indexOfRemainQuestions.splice(randomIndex, 1);
   return questionAndAnswerPairs[randomQuestionIndex];

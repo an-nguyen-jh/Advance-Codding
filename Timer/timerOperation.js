@@ -6,6 +6,8 @@ import {
   randomSelectQuestion,
 } from "./module/utils.js";
 
+const SECOND = 1000; //ms
+
 const noticeContainer = document.querySelector(".notice");
 const noticeTitle = document.querySelector(".notice__title");
 const timerContent = document.querySelector(".timer__content");
@@ -13,7 +15,7 @@ const continueBtn = document.getElementById("continueBtn");
 const resetBtn = document.getElementById("resetBtn");
 const timerStartBtn = document.querySelector(".timer__startBtn");
 const answerInput = document.getElementById("answer");
-const questionContainer = document.querySelector(".queston");
+const questionContainer = document.querySelector(".question");
 const noticeIcon = document.getElementById("noticeIcon");
 
 let selectedQuestion;
@@ -23,60 +25,77 @@ let indexOfRemainQuestions = Array.from(
   Array(questionAndAnswerPairs.length).keys()
 );
 
-addWebsiteEventHandlers();
-
 function addWebsiteEventHandlers() {
   timerStartBtn.addEventListener("click", startSolveQuestions);
   answerInput.addEventListener(
     "keyup",
     debounceAnswerChange(function calback(e) {
-      checkCorrectnessOfAnswer(e);
+      const correctnessOfAnswer = checkCorrectnessOfAnswer(e);
+      console.log(correctnessOfAnswer);
+      if (correctnessOfAnswer) {
+        controlExpressionOfTimer(correctnessOfAnswer);
+      }
     })
   );
   answerInput.addEventListener(
     "paste",
     debounceAnswerChange(function calback(e) {
-      checkCorrectnessOfAnswer(e);
+      const correctnessOfAnswer = checkCorrectnessOfAnswer(e);
+      if (correctnessOfAnswer) {
+        controlExpressionOfTimer(correctnessOfAnswer);
+      }
     })
   );
-  continueBtn.addEventListener("click", startCountdownForQuestion);
+  continueBtn.addEventListener("click", function continueSolveProcess() {
+    selectedQuestion = randomSelectQuestion(
+      indexOfRemainQuestions,
+      questionAndAnswerPairs
+    );
+    startCountdownForQuestion();
+    noticeContainer.style.display = "none";
+    controlAnswerInput(true, false);
+  });
   resetBtn.addEventListener("click", resetSolveProcess);
 }
 
 function startSolveQuestions() {
   timerContent.style.display = "flex";
   timerStartBtn.style.display = "none";
-  startCountdownForQuestion();
-}
-
-function startCountdownForQuestion() {
   selectedQuestion = randomSelectQuestion(
     indexOfRemainQuestions,
     questionAndAnswerPairs
   );
+  startCountdownForQuestion();
+  noticeContainer.style.display = "none";
+  controlAnswerInput(true, false);
+}
+
+function startCountdownForQuestion() {
   const countdownTime = selectedQuestion.timeForAnswer;
   questionContainer.innerHTML = selectedQuestion.question;
   countdownClock = countdownInterval(countdownTime);
-  noticeContainer.style.display = "none";
-  answerInput.value = "";
-  answerInput.readOnly = false;
+}
+
+function controlAnswerInput(isClear, readOnly) {
+  if (isClear) {
+    answerInput.value = "";
+  }
+  answerInput.readOnly = readOnly;
 }
 
 function checkCorrectnessOfAnswer(e) {
   const answer = e.target.value.trim().toLowerCase();
   const correctAnswer = selectedQuestion.answer;
-  //if answer length > 0
-  if (answer.length > 0 && e.code.match(/Enter|Space|[a-zA-Z0-9]/)) {
-    if (correctAnswer === answer) {
-      if (indexOfRemainQuestions.length === 0) {
-        controlExpressionOfTimer("finish");
-      } else {
-        controlExpressionOfTimer("right");
-      }
-    } else {
-      controlExpressionOfTimer("wrong");
-    }
+  if (answer.length === 0 || !e.code.match(/Enter|Space|[a-zA-Z0-9]/)) {
+    return;
   }
+  if (answer === correctAnswer) {
+    if (indexOfRemainQuestions.length === 0) {
+      return "finish";
+    }
+    return "right";
+  }
+  return "wrong";
 }
 
 function controlExpressionOfTimer(status) {
@@ -86,18 +105,18 @@ function controlExpressionOfTimer(status) {
   switch (status) {
     case "wrong":
       controlPresentOfContinueAndResetBtn(false, false);
-      break;
+      return;
     case "right":
       clearInterval(countdownClock);
-      answerInput.readOnly = true;
+      controlAnswerInput(false, true);
       controlPresentOfContinueAndResetBtn(true, true);
-      break;
+      return;
     case "timeout":
     case "finish":
       clearInterval(countdownClock);
-      answerInput.readOnly = true;
+      controlAnswerInput(false, true);
       controlPresentOfContinueAndResetBtn(false, true);
-      break;
+      return;
   }
 }
 
@@ -105,7 +124,13 @@ function resetSolveProcess() {
   indexOfRemainQuestions = Array.from(
     Array(questionAndAnswerPairs.length).keys()
   );
+  selectedQuestion = randomSelectQuestion(
+    indexOfRemainQuestions,
+    questionAndAnswerPairs
+  );
   startCountdownForQuestion();
+  noticeContainer.style.display = "none";
+  controlAnswerInput(true, false);
 }
 
 function countdownInterval(countdownTime) {
@@ -127,12 +152,14 @@ function countdownInterval(countdownTime) {
   }
   //the setInterval function delay the first time
   displayCountdownClock();
-  return setInterval(displayCountdownClock, 1000);
+  return setInterval(displayCountdownClock, SECOND);
 }
 
 function controlPresentOfContinueAndResetBtn(isContinue, isReset) {
   continueBtn.style.display = isContinue ? "inline-block" : "none";
   resetBtn.style.display = isReset ? "inline-block" : "none";
 }
+
+addWebsiteEventHandlers();
 
 //question list at: https://parade.com/970343/parade/logic-puzzles/

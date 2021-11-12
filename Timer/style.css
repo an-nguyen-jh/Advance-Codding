@@ -112,7 +112,7 @@ body {
   display: inline-block;
 }
 
-.queston {
+.question {
   background-color: var(--secondaryColor);
   color: #000000;
   font-size: 1.15rem;
@@ -124,7 +124,7 @@ body {
   text-align: center;
 }
 
-.queston p {
+.question p {
   margin: 10px;
 }
 

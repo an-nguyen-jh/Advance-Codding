@@ -1,7 +1,6 @@
 export const questionAndAnswerPairs = [
   {
-    question: `<p>A brother and a sister were born in summer and in winter.</p>
-    <p>The sister was not born in winter.</p>
+    question: `<The>A brother and a sister were born in summer and in winter.The sister was not born in winter.</p>
     <p> Who was born in summer?</p>`,
     answer: "the sister",
     timeForAnswer: 20, //s
