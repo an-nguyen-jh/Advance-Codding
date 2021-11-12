@@ -15,7 +15,7 @@
       timeForAnswer: 30, //s
     },
     {
-      question: `<p>There are two ducks in front of a duck, two ducks behind a duck and a duck in the middle</p>. 
+      question: `<p>There are two ducks in front of a duck, two ducks behind a duck and a duck in the middle.</p> 
       <p>How many ducks are there?</p>`,
       answer: "three",
       timeForAnswer: 20, //s
@@ -34,7 +34,7 @@
     },
     {
       question:
-        "<p>The day before two days after the day before tomorrow is Saturday</p>.<p> What day is it today?<,p>",
+        "<p>The day before two days after the day before tomorrow is Saturday.</p><p> What day is it today?</p>",
       answer: "friday",
       timeForAnswer: 40, //s
     },
@@ -61,15 +61,15 @@
     },
   };
 
-  const noticeContainer = document.querySelector(".notice-container");
+  const noticeContainer = document.querySelector(".notice");
   const noticeTitle = document.querySelector(".notice__title");
   const timerContent = document.querySelector(".timer__content");
-  const continueBtn = document.getElementById("continue-btn");
-  const resetBtn = document.getElementById("reset-btn");
-  const timerStartBtn = document.querySelector(".timer__start-btn");
+  const continueBtn = document.getElementById("continueBtn");
+  const resetBtn = document.getElementById("resetBtn");
+  const timerStartBtn = document.querySelector(".timer__startBtn");
   const answerInput = document.getElementById("answer");
-  const questionContainer = document.querySelector(".queston-container");
-  const noticeIcon = document.getElementById("notice-icon");
+  const questionContainer = document.querySelector(".queston");
+  const noticeIcon = document.getElementById("noticeIcon");
 
   let selectedQuestion;
   let countdownClock;
@@ -114,7 +114,7 @@
     answerInput.readOnly = false;
   }
 
-  function debounceAnswerChange(callback, timeout = 1000) {
+  function debounceAnswerChange(callback, timeout = 500) {
     let timer;
     return function holdTimer(...args) {
       //args take argument pass in when event handle active, in this case keyboard event
@@ -187,8 +187,8 @@
   }
 
   function countdownInterval(countdownTime) {
-    const minuteInTimer = document.getElementById("minute-timer");
-    const secondInTimer = document.getElementById("second-timer");
+    const minuteInTimer = document.getElementById("minuteTimer");
+    const secondInTimer = document.getElementById("secondTimer");
 
     function displayCountdownClock() {
       const [minute, second] = convertTimeToMinuteAndSecond(countdownTime);

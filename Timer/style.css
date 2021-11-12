@@ -24,7 +24,7 @@ body {
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-.center-container {
+.center {
   width: 100%;
   height: 100%;
   display: flex;
@@ -32,7 +32,7 @@ body {
   position: relative;
 }
 
-.notice-container {
+.notice {
   display: none;
   flex-direction: column;
   justify-content: center;
@@ -53,13 +53,13 @@ body {
   text-align: center;
 }
 
-.notice__btn-group {
+.notice__btnGroup {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.timer-container {
+.timer {
   width: 100%;
   max-width: 800px;
   display: flex;
@@ -70,9 +70,9 @@ body {
   padding: var(--mainPadding);
 }
 
-.notice__restart-btn,
-.notice__exit-btn,
-.timer__start-btn {
+.notice__restartBtn,
+.notice__exitBtn,
+.timer__startBtn {
   width: 50%;
   height: 48px;
   margin: var(--mainMargin);
@@ -83,12 +83,12 @@ body {
   cursor: pointer;
 }
 
-.notice__restart-btn,
-.timer__start-btn {
+.notice__restartBtn,
+.timer__startBtn {
   background-color: var(--primaryColor);
 }
 
-.notice__exit-btn {
+.notice__exitBtn {
   background-color: var(--secondaryDarkColor);
 }
 
@@ -100,7 +100,7 @@ body {
   width: 100%;
 }
 
-.timer__clock-container {
+.timer__clock {
   font-size: 6rem;
   color: var(--secondaryColor);
   align-items: center;
@@ -112,7 +112,7 @@ body {
   display: inline-block;
 }
 
-.queston-container {
+.queston {
   background-color: var(--secondaryColor);
   color: #000000;
   font-size: 1.15rem;
@@ -124,7 +124,11 @@ body {
   text-align: center;
 }
 
-.answer-container {
+.queston p {
+  margin: 10px;
+}
+
+.answer {
   width: 40%;
   margin: var(--mainMargin) 0;
   padding: var(--mainPadding);
@@ -135,8 +139,8 @@ body {
   color: #ffffff;
 }
 
-.answer-container:focus,
-.answer-container:hover {
+.answer:focus,
+.answer:hover {
   background-color: var(--inputBgColorFocus);
   border-bottom: 2px solid #000000;
   outline: none;

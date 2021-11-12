@@ -9,30 +9,30 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div class="center-container">
-      <div class="timer-container">
-        <div class="notice-container">
-          <img src="" alt="icon" class="notice__icon" id="notice-icon" />
+    <div class="center">
+      <div class="timer">
+        <div class="notice">
+          <img src="" alt="icon" class="notice__icon" id="noticeIcon" />
           <p class="notice__title"></p>
-          <div class="notice__btn-group">
-            <button class="notice__restart-btn" id="continue-btn">
+          <div class="notice__btnGroup">
+            <button class="notice__restartBtn" id="continueBtn">
               Continue
             </button>
-            <button class="notice__exit-btn" id="reset-btn">Reset</button>
+            <button class="notice__exitBtn" id="resetBtn">Reset</button>
           </div>
         </div>
-        <button class="timer__start-btn">Start Question</button>
+        <button class="timer__startBtn">Start Question</button>
 
-        <div class="timer__content" id="timer-content">
-          <div class="timer__clock-container">
-            <div class="timer__clock__number" id="minute-timer">00</div>
+        <div class="timer__content" id="timerContent">
+          <div class="timer__clock">
+            <div class="timer__clock__number" id="minuteTimer">00</div>
             <span>&nbsp;:&nbsp;</span>
-            <div class="timer__clock__number" id="second-timer">00</div>
+            <div class="timer__clock__number" id="secondTimer">00</div>
           </div>
-          <div class="queston-container"></div>
+          <div class="queston"></div>
           <input
             type="text"
-            class="answer-container"
+            class="answer"
             id="answer"
             placeholder="Add answer here"
           />
