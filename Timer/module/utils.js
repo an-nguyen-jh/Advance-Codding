@@ -35,7 +35,6 @@ export function randomSelectQuestion(
 ) {
   const randomIndex = Math.floor(Math.random() * indexOfRemainQuestions.length);
   const randomQuestionIndex = indexOfRemainQuestions[randomIndex];
-  //remove selected quuestion index out of remain question list
   indexOfRemainQuestions.splice(randomIndex, 1);
   return questionAndAnswerPairs[randomQuestionIndex];
 }

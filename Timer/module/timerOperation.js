@@ -20,7 +20,6 @@ function operationTimer(questionAndAnswerPairs, noticeType) {
 
   let selectedQuestion;
   let countdownClock;
-  //array to hold index of remain question
   let indexOfRemainQuestions = Array.from(
     Array(questionAndAnswerPairs.length).keys()
   );
